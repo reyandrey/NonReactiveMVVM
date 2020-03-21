@@ -20,7 +20,7 @@ class FriendsListViewModel {
     }
     
     //MARK: - Events
-    var didError: ((ErrorType) -> Void)?
+    var didError: ((Error) -> Void)?
     var didUpdate: ((FriendsListViewModel) -> Void)?
     var didSelectFriend: ((Friend) -> Void)?
     
@@ -46,7 +46,7 @@ class FriendsListViewModel {
             success: { [weak self] friends in
                 guard let `self` = self else { return }
                 
-                self.friendViewModels = friends.map { self.viewModelFor($0) }
+                self.friendViewModels = friends.map { self.viewModelFor(friend: $0) }
                 self.isUpdating = false
             },
             failure: { [weak self] error in

@@ -25,10 +25,10 @@ class FriendsListViewController: UIViewController {
         self.title = self.viewModel.title
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Refresh", style: .Plain,
+            title: "Refresh", style: .plain,
             target: self, action: #selector(FriendsListViewController.reloadData)
         )
-        self.viewModel.friendViewModelsTypes.forEach { $0.registerCell(self.tableView) }
+        self.viewModel.friendViewModelsTypes.forEach { $0.registerCell(tableView: self.tableView) }
         self.bindToViewModel()
         self.reloadData()
     }
@@ -39,15 +39,15 @@ class FriendsListViewController: UIViewController {
             self?.viewModelDidUpdate()
         }
         self.viewModel.didError = { [weak self] error in
-            self?.viewModelDidError(error)
+            self?.viewModelDidError(error: error)
         }
     }
     private func viewModelDidUpdate() {
         self.title = self.viewModel.title
-        self.navigationItem.rightBarButtonItem?.enabled = !self.viewModel.isUpdating
+        self.navigationItem.rightBarButtonItem?.isEnabled = !self.viewModel.isUpdating
         self.tableView.reloadData()
     }
-    private func viewModelDidError(error: ErrorType) {
+    private func viewModelDidError(error: Error) {
         UIAlertView(title: "Error", message: error.displayString(), delegate: nil, cancelButtonTitle: "OK").show()
     }
     
@@ -58,22 +58,25 @@ class FriendsListViewController: UIViewController {
 }
 
 extension FriendsListViewController: UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.viewModel.friendViewModels.count
-    }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return self.viewModel.friendViewModels[indexPath.row]
-            .dequeueCell(tableView, indexPath: indexPath)
+            .dequeueCell(tableView: tableView, indexPath: indexPath as NSIndexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.viewModel.friendViewModels.count
     }
 }
 
 extension FriendsListViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.viewModel.friendViewModels[indexPath.row].cellSelected()
     }
+    
 }
 
 extension FriendsListViewController: Themeable {
-    var navigationBarBackgroundColor: UIColor? { return .whiteColor() }
-    var navigationBarTintColor: UIColor? { return .blackColor() }
+    var navigationBarBackgroundColor: UIColor? { return .white }
+    var navigationBarTintColor: UIColor? { return .black }
 }

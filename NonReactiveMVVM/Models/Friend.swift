@@ -19,16 +19,16 @@ struct Friend {
 }
 
 extension Friend {
-    init?(json: [String: AnyObject]) {
+    init?(json: [String: Any]) {
         
         guard
-            let id = json.getWithKeyPath("id.value", as: String.self),
-            let firstName = json.getWithKeyPath("name.first", as: String.self),
-            let lastName = json.getWithKeyPath("name.last", as: String.self),
-            let email = json.getWithKeyPath("email", as: String.self),
-            let image_small = json.getWithKeyPath("picture.thumbnail", as: String.self),
-            let image_large = json.getWithKeyPath("picture.large", as: String.self),
-            let about = json.getWithKeyPath("about", as: String.self)
+            let id = json.getWithKeyPath(keyPath: "id.value", as: String.self),
+            let firstName = json.getWithKeyPath(keyPath: "name.first", as: String.self),
+            let lastName = json.getWithKeyPath(keyPath: "name.last", as: String.self),
+            let email = json.getWithKeyPath(keyPath: "email", as: String.self),
+            let image_small = json.getWithKeyPath(keyPath: "picture.thumbnail", as: String.self),
+            let image_large = json.getWithKeyPath(keyPath: "picture.large", as: String.self),
+            let about = json.getWithKeyPath(keyPath: "about", as: String.self)
             else { return nil }
         
         self.id = id

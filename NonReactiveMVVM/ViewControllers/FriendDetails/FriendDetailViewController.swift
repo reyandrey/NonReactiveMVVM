@@ -41,7 +41,7 @@ class FriendDetailViewController: UIViewController {
             self?.viewModelDidUpdate()
         }
         self.viewModel.didError = { [weak self] error in
-            self?.viewModelDidError(error)
+            self?.viewModelDidError(error: error)
         }
     }
     private func viewModelDidUpdate() {
@@ -50,12 +50,12 @@ class FriendDetailViewController: UIViewController {
         self.friendEmailLabel.text = self.viewModel.email
         self.friendAboutLabel.text = self.viewModel.about
     }
-    private func viewModelDidError(error: ErrorType) {
+    private func viewModelDidError(error: Error) {
         UIAlertView(title: "Error", message: error.displayString(), delegate: nil, cancelButtonTitle: "OK").show()
     }
 }
 
 extension FriendDetailViewController: Themeable {
     var navigationBarBackgroundColor: UIColor? { return self.backingView?.backgroundColor }
-    var navigationBarTintColor: UIColor? { return .whiteColor() }
+    var navigationBarTintColor: UIColor? { return .white }
 }

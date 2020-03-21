@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum NetworkRequestError: ErrorType, CustomStringConvertible {
+enum NetworkRequestError: Error, CustomStringConvertible {
     case InvalidURL(String)
     
     var description: String {
@@ -36,8 +36,8 @@ struct NetworkRequest {
     func buildURLRequest() throws -> NSURLRequest {
         guard let url = NSURL(string: self.url) else { throw NetworkRequestError.InvalidURL(self.url) }
         
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = self.method.rawValue
+        let request = NSMutableURLRequest(url: url as URL)
+        request.httpMethod = self.method.rawValue
         
         return request
     }

@@ -15,8 +15,8 @@ protocol Themeable {
 
 class NavigationController: UINavigationController {
     //MARK: - Properties
-    var defaultNavBarBackgroundColor: UIColor = .whiteColor()
-    var defaultNavBarTintColor: UIColor = .blackColor()
+    var defaultNavBarBackgroundColor: UIColor = .white
+    var defaultNavBarTintColor: UIColor = .black
     var hideBackButtonText: Bool = true
     
     //MARK: - Private
@@ -29,35 +29,35 @@ class NavigationController: UINavigationController {
     }
     
     //MARK: - Navigation
-    override func pushViewController(viewController: UIViewController, animated: Bool) {
+    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         self.cacheTitleAndHide()
         let root = (self.viewControllers.count == 0)
-        self.styleViewController(viewController, root: root)
+        self.styleViewController(vc: viewController, root: root)
         super.pushViewController(viewController, animated: animated)
     }
-    override func popViewControllerAnimated(animated: Bool) -> UIViewController? {
+    override func popViewController(animated: Bool) -> UIViewController? {
         let destinationVC = self.viewControllers.dropLast().last
         let root = (self.viewControllers.dropLast().count == 1)
-        self.uncacheTitleAndShow(destinationVC)
-        self.styleViewController(destinationVC, root: root)
-        return super.popViewControllerAnimated(animated)
+        self.uncacheTitleAndShow(vc: destinationVC)
+        self.styleViewController(vc: destinationVC, root: root)
+        return super.popViewController(animated: animated)
     }
     
     //MARK: - Styling
     private func styleViewController(vc: UIViewController?, root: Bool) {
         if let vc = vc as? Themeable {
             let backgroundColor = vc.navigationBarBackgroundColor ?? self.defaultNavBarBackgroundColor
-            self.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+            self.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
             
             if (root) {
                 self.navigationBar.setBackgroundImage(
-                    UIImage.fromColor(backgroundColor),
-                    forBarMetrics: UIBarMetrics.Default
+                    UIImage.fromColor(color: backgroundColor),
+                    for: UIBarMetrics.default
                 )
             } else {
                 self.navigationBar.barTintColor = backgroundColor
             }
-            self.navigationBar.translucent = true
+            self.navigationBar.isTranslucent = true
             
             self.navigationBar.tintColor = vc.navigationBarTintColor ?? self.defaultNavBarTintColor
         }

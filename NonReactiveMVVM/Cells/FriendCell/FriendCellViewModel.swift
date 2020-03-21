@@ -25,12 +25,12 @@ class FriendCellViewModel {
     }
     
     //MARK: - Events
-    var didError: ((ErrorType) -> Void)?
+    var didError: ((Error) -> Void)?
     var didUpdate: ((FriendCellViewModel) -> Void)?
     var didSelectFriend: ((Friend) -> Void)?
     
     //MARK: - Properties
-    var fullName: String { return "\(self.friend.firstName.capitalizedString) \(self.friend.lastName.capitalizedString)" }
+    var fullName: String { return "\(self.friend.firstName.capitalized) \(self.friend.lastName.capitalized)" }
     private(set) var image: UIImage?
     
     //MARK: - Actions
@@ -63,13 +63,13 @@ class FriendCellViewModel {
 
 extension FriendCellViewModel: CellRepresentable {
     static func registerCell(tableView: UITableView) {
-        tableView.registerNib(UINib(nibName: String(FriendCell), bundle: nil), forCellReuseIdentifier: String(FriendCell))
+        tableView.register(UINib(nibName: String(describing: FriendCell.self), bundle: nil), forCellReuseIdentifier: String(describing: FriendCell.self))
     }
     func dequeueCell(tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(String(FriendCell), forIndexPath: indexPath) as! FriendCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: FriendCell.self), for: indexPath as IndexPath) as! FriendCell
         cell.uniqueId = indexPath
         self.restrictedTo = indexPath
-        cell.setup(self)
+        cell.setup(viewModel: self)
         return cell
     }
     func cellSelected() {

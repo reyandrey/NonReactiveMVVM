@@ -16,7 +16,7 @@ class Application {
         navigationController: NavigationController(),
         application: self
     )
-    lazy var network = NetworkProvider(session: NSURLSession.sharedSession())
+    lazy var network = NetworkProvider(session: URLSession.shared)
     lazy var api: API = API(network: self.network)
     lazy var imageCache: ImageCache = ImageCacheProvider(network: self.network)
     

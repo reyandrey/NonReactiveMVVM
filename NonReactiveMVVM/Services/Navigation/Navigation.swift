@@ -33,7 +33,7 @@ class Navigation {
             imageCache: self.application.imageCache
         )
         viewModel.didSelectFriend = { [weak self] friend in
-            self?.showFriend(friend)
+            self?.showFriend(friend: friend)
         }
         
         let instance = FriendsListViewController(viewModel: viewModel)

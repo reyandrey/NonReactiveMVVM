@@ -25,11 +25,11 @@ class FriendDetailViewModel {
     }
     
     //MARK: - Events
-    var didError: ((ErrorType) -> Void)?
+    var didError: ((Error) -> Void)?
     var didUpdate: (() -> Void)?
     
     //MARK: - Properties
-    var fullName: String { return "\(self.friend.firstName.capitalizedString) \(self.friend.lastName.capitalizedString)" }
+    var fullName: String { return "\(self.friend.firstName.capitalized) \(self.friend.lastName.capitalized)" }
     private(set) lazy var image: UIImage? = self.imageCache.cachedImage(
         url: self.friend.image_large,
         or: self.imageCache.cachedImage(
@@ -38,11 +38,11 @@ class FriendDetailViewModel {
         )
     )
     var email: String { return self.friend.email }
-    var about: String { return self.friend.about.capitalizedString }
+    var about: String { return self.friend.about.capitalized }
     
     //MARK: - Actions
     private func loadLargeImage() {
-        if (self.imageCache.hasImageFor(self.friend.image_large)) { return }
+        if (self.imageCache.hasImageFor(url: self.friend.image_large)) { return }
         
         self.imageCacheCancellable = self.imageCache.image(
             url: self.friend.image_large,

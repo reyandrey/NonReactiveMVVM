@@ -19,7 +19,7 @@ class ImageCacheProvider: ImageCache {
     }
     
     //MARK: - Public
-    func image(url url: String, success: (UIImage) -> Void, failure: (ErrorType) -> Void) -> NetworkCancelable? {
+    func image(url url: String, success: @escaping (UIImage) -> Void, failure: @escaping (Error) -> Void) -> NetworkCancelable? {
         if let existing = self.cache[url] {
             success(existing)
             print("cached")
@@ -28,11 +28,11 @@ class ImageCacheProvider: ImageCache {
         
         let request = NetworkRequest(method: .GET, url: url)
         return self.network.makeRequest(
-            request,
+            request: request,
             success: { [weak self] (data: NSData) in
                 guard let `self` = self else { return }
                 
-                guard let image = UIImage(data: data) else {
+                guard let image = UIImage(data: data as Data) else {
                     failure(ImageCacheError.InvalidResponse)
                     return
                 }

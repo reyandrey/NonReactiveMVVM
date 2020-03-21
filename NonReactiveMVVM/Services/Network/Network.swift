@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum NetworkError: ErrorType, CustomStringConvertible {
+enum NetworkError: Error, CustomStringConvertible {
     case Unknown
     case InvalidResponse
     
@@ -23,9 +23,9 @@ enum NetworkError: ErrorType, CustomStringConvertible {
 protocol NetworkCancelable {
     func cancel()
 }
-extension NSURLSessionDataTask: NetworkCancelable { }
+extension URLSessionDataTask: NetworkCancelable { }
 
 protocol Network {
-    func makeRequest(request: NetworkRequest, success: ([String: AnyObject]) -> Void, failure: (ErrorType) -> Void) -> NetworkCancelable?
-    func makeRequest(request: NetworkRequest, success: (NSData) -> Void, failure: (ErrorType) -> Void) -> NetworkCancelable?
+    func makeRequest(request: NetworkRequest, success: @escaping ([String: AnyObject]) -> Void, failure: @escaping  (Error) -> Void) -> NetworkCancelable?
+    func makeRequest(request: NetworkRequest, success: @escaping  (NSData) -> Void, failure: @escaping  (Error) -> Void) -> NetworkCancelable?
 }
