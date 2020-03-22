@@ -19,7 +19,7 @@ class ImageCacheProvider: ImageCache {
     }
     
     //MARK: - Public
-    func image(url url: String, success: @escaping (UIImage) -> Void, failure: @escaping (Error) -> Void) -> NetworkCancelable? {
+    func image(url: String, success: @escaping (UIImage) -> Void, failure: @escaping (Error) -> Void) -> NetworkCancelable? {
         if let existing = self.cache[url] {
             success(existing)
             print("cached")
@@ -44,7 +44,7 @@ class ImageCacheProvider: ImageCache {
     func hasImageFor(url: String) -> Bool {
         return (self.cache[url] != nil)
     }
-    func cachedImage(url url: String, or: UIImage?) -> UIImage? {
+    func cachedImage(url: String, or: UIImage?) -> UIImage? {
         return self.cache[url] ?? or
     }
     func clearCache() { self.cache = [String: UIImage]() }

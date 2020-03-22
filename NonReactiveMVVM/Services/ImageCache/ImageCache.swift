@@ -21,8 +21,8 @@ enum ImageCacheError: Error, CustomStringConvertible {
 protocol ImageCache {
     init(network: Network)
     
-    func image(url url: String, success: @escaping (UIImage) -> Void, failure: @escaping (Error) -> Void) -> NetworkCancelable?
+    func image(url: String, success: @escaping (UIImage) -> Void, failure: @escaping (Error) -> Void) -> NetworkCancelable?
     func hasImageFor(url: String) -> Bool
-    func cachedImage(url url: String, or: UIImage?) -> UIImage?
+    func cachedImage(url: String, or: UIImage?) -> UIImage?
     func clearCache()
 }

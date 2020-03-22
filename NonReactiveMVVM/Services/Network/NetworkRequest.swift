@@ -9,11 +9,11 @@
 import Foundation
 
 enum NetworkRequestError: Error, CustomStringConvertible {
-    case InvalidURL(String)
+    case invalidURL(String)
     
     var description: String {
         switch self {
-        case .InvalidURL(let url): return "The url '\(url)' was invalid"
+        case .invalidURL(let url): return "The url '\(url)' was invalid"
         }
     }
 }
@@ -34,7 +34,7 @@ struct NetworkRequest {
     
     //MARK: - Public Functions
     func buildURLRequest() throws -> NSURLRequest {
-        guard let url = NSURL(string: self.url) else { throw NetworkRequestError.InvalidURL(self.url) }
+        guard let url = NSURL(string: self.url) else { throw NetworkRequestError.invalidURL(self.url) }
         
         let request = NSMutableURLRequest(url: url as URL)
         request.httpMethod = self.method.rawValue

@@ -25,7 +25,7 @@ class NetworkProvider: Network {
             let request = try request.buildURLRequest()
             let task = self.session.dataTask(with: request as URLRequest) { (data, response, error) in
                 guard let data = data else {
-                    DispatchQueue.main.async { failure(error ?? NetworkError.Unknown) }
+                    DispatchQueue.main.async { failure(error ?? NetworkError.unknown) }
                     return
                 }
                 
@@ -33,7 +33,7 @@ class NetworkProvider: Network {
                     let jsonOptional = try? JSONSerialization.jsonObject(with: data, options: []),
                     let json = jsonOptional as? [String: AnyObject]
                     else {
-                        DispatchQueue.main.async { failure(NetworkError.InvalidResponse) }
+                        DispatchQueue.main.async { failure(NetworkError.invalidResponse) }
                         return
                     }
                 DispatchQueue.main.async { success(json) }
@@ -51,7 +51,7 @@ class NetworkProvider: Network {
             let request = try request.buildURLRequest()
             let task = self.session.dataTask(with: request as URLRequest) { (data, response, error) in
                 guard let data = data else {
-                    DispatchQueue.main.async { failure(error ?? NetworkError.Unknown) }
+                    DispatchQueue.main.async { failure(error ?? NetworkError.unknown) }
                     return
                 }
                 DispatchQueue.main.async { success(data as NSData) }

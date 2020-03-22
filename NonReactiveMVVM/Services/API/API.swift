@@ -35,7 +35,7 @@ class API {
             method: .GET,
             url: "http://api.randomuser.me/?results=20"
         )
-        self.network.makeRequest(
+        _ = self.network.makeRequest(
             request: request,
             success: { (json: [String: Any]) in
                 guard let items = json.getWithKeyPath(keyPath: "results", as: [[String: Any]].self) else {
@@ -44,7 +44,7 @@ class API {
                 }
                 
                 let updatedItems = items.map(self.jsonWithInjectedAbout)
-                let users = updatedItems.flatMap(Friend.init(json:))
+                let users = updatedItems.compactMap(Friend.init(json:))
                 success(users)
             },
             failure: failure)

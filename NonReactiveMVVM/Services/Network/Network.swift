@@ -9,13 +9,13 @@
 import Foundation
 
 enum NetworkError: Error, CustomStringConvertible {
-    case Unknown
-    case InvalidResponse
+    case unknown
+    case invalidResponse
     
     var description: String {
         switch self {
-        case .Unknown: return "An unknown error occurred"
-        case .InvalidResponse: return "Received an invalid response"
+        case .unknown: return "An unknown error occurred"
+        case .invalidResponse: return "Received an invalid response"
         }
     }
 }

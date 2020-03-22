@@ -8,7 +8,7 @@
 
 import Foundation
 
-func random(min min: Int, max: Int) -> Int {
+func random(min: Int, max: Int) -> Int {
     return Int(arc4random_uniform(UInt32(max + 1)) + UInt32(min))
 }
 
